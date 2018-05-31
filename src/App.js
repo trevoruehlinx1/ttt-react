@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -42,14 +41,22 @@ class App extends Component {
         squares[a] === squares[b] && 
         squares[a] === squares[c]) {
           return {player: squares[a], winningLine: this.lines[i]};
-            this.state.winner = squares[a];
-            this.state.winningLine = this.lines[i];
+          this.setState({
+              winner:squares[a],
+              winningLine:this.lines[i]
+          });
+            // this.state.winner = squares[a];
+            // this.state.winningLine = this.lines[i];
             return true;
         }
     }
     return {player: null, winningLine: []};
-    this.state.winner = null;
-    this.state.winningLine = [];
+    this.setState({
+        winner:null,
+        winningLine:[]
+    });
+    // this.state.winner = null;
+    // this.state.winningLine = [];
     return false;
 }
 
