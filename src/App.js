@@ -23,11 +23,12 @@ class App extends Component {
         this.handleClick = this.handleClick.bind(this);
   }
   handleClick(event) {
+      console.log("hi");
     const i = event.target.id;
     let squares = JSON.parse(JSON.stringify(this.state.squares));
-    squares[i] = this.xIsNext ? 'X' : 'O';
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
     const theWinner = this.calculateWinner(squares);
-        this.setState({
+    this.setState({
         squares: squares,
         xIsNext: !this.state.xIsNext,
         winner: theWinner.player,
@@ -41,36 +42,23 @@ class App extends Component {
         squares[a] === squares[b] && 
         squares[a] === squares[c]) {
           return {player: squares[a], winningLine: this.lines[i]};
-          this.setState({
-              winner:squares[a],
-              winningLine:this.lines[i]
-          });
-            // this.state.winner = squares[a];
-            // this.state.winningLine = this.lines[i];
-            return true;
         }
     }
     return {player: null, winningLine: []};
-    this.setState({
-        winner:null,
-        winningLine:[]
-    });
-    // this.state.winner = null;
-    // this.state.winningLine = [];
-    return false;
 }
 
 
   renderSquare(i) {
     const className = (this.state.squares[i] == null) ? "square" :
-        (this.state.winner != null && this.state.winner === this.state.squares[i]) ? 
+        (this.state.winner != null && this.state.winner === this.state.squares[i] &&
+        this.state.winningLine.includes(i)) ? 
         "square-winner" : "square-full";
     const enabled = (this.state.winner == null && this.state.squares[i] == null) ? true : false;
     const eventHandler = (enabled)? this.handleClick: () => {};
     const output = 
         <div className={className} id={i}
             onClick={eventHandler}>
-            ${(this.state.squares[i] != null) ? this.state.squares[i] : ""}
+            {(this.state.squares[i] != null) ? this.state.squares[i] : ""}
         </div>;   
     return output;
 }
